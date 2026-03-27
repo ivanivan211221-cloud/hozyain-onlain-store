@@ -1,0 +1,52 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
+const { sequelize } = require("./models");
+
+const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/product.routes");
+const orderRoutes = require("./routes/order.routes");
+const reviewRoutes = require("./routes/review.routes");
+const adminRoutes = require("./routes/admin.routes");
+const categoryRoutes = require("./routes/category.routes");
+
+const app = express();
+
+const uploadsPath = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
+
+app.use(helmet());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN?.split(",") || ["http://localhost:5173"],
+    credentials: true,
+  })
+);
+app.use(express.json({ limit: "2mb" }));
+app.use(morgan("dev"));
+app.use("/uploads", express.static(uploadsPath));
+
+app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin", adminRoutes);
+
+app.use((err, _req, res, _next) => {
+  console.error(err);
+  res.status(500).json({ message: "Внутренняя ошибка сервера" });
+});
+
+const connectDb = async () => {
+  await sequelize.authenticate();
+  await sequelize.sync();
+};
+
+module.exports = { app, connectDb };

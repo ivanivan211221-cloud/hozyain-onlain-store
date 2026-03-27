@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: hozyan-api
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_STORAGE
+        value: ./data/hozyan.sqlite
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://hozyan-client.onrender.com
+
+  - type: web
+    name: hozyan-client
+    env: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://hozyan-api.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
