@@ -18,6 +18,7 @@ const app = express();
 
 const uploadsPath = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
+const clientDistPath = path.resolve(process.cwd(), "..", "client", "dist");
 
 app.use(helmet());
 app.use(
@@ -38,6 +39,13 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
+
+if (process.env.NODE_ENV === "production" && fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  app.get(/^\/(?!api).*/, (_req, res) => {
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
+}
 
 app.use((err, _req, res, _next) => {
   console.error(err);
