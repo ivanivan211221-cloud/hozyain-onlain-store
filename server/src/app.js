@@ -20,7 +20,22 @@ const uploadsPath = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
 const clientDistPath = path.resolve(process.cwd(), "..", "client", "dist");
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://images.unsplash.com",
+          "https://source.unsplash.com",
+          "https://loremflickr.com",
+        ],
+      },
+    },
+  })
+);
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN?.split(",") || ["http://localhost:5173"],
