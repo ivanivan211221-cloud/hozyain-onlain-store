@@ -19,12 +19,14 @@ const app = express();
 const uploadsPath = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
 const clientDistPath = path.resolve(process.cwd(), "..", "client", "dist");
+const cspDirectives = helmet.contentSecurityPolicy.getDefaultDirectives();
+delete cspDirectives["img-src"];
 
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        ...cspDirectives,
         imgSrc: [
           "'self'",
           "data:",
