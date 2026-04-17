@@ -4,6 +4,7 @@ services:
     env: node
     rootDir: server
     buildCommand: npm install
+    preDeployCommand: npm run seed
     startCommand: npm start
     healthCheckPath: /api/health
     disk:
@@ -16,7 +17,7 @@ services:
       - key: DB_STORAGE
         value: /var/data/hozyan.sqlite
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
       - key: CORS_ORIGIN
         value: https://hozyan-client.onrender.com
 
