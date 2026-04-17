@@ -9,3 +9,5 @@ Thumbs.db
 *.log
 .vscode/*
 !.vscode/extensions.json
+*.sqlite
+server/data/*.sqlite

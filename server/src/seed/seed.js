@@ -211,7 +211,7 @@ async function seed() {
       stock: 40,
       brand: "ElectroMax",
       categoryId: byName["Электрика"].id,
-      image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=1400&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1555963966-b7ae5404b6ed?q=80&w=1400&auto=format&fit=crop",
     },
     {
       title: "Автоматический выключатель C16",

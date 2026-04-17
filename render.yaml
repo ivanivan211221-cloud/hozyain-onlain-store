@@ -6,11 +6,15 @@ services:
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health
+    disk:
+      name: hozyan-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
       - key: DB_STORAGE
-        value: ./data/hozyan.sqlite
+        value: /var/data/hozyan.sqlite
       - key: JWT_SECRET
         sync: false
       - key: CORS_ORIGIN
