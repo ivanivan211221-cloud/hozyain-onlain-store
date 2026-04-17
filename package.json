@@ -1,0 +1,10 @@
+{
+  "name": "hozyan-website",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "render-build": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "render-start": "npm --prefix server start",
+    "seed": "npm --prefix server run seed"
+  }
+}
