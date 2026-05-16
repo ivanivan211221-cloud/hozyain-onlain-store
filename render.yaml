@@ -1,3 +1,8 @@
+databases:
+  - name: hozyan-db
+    databaseName: hozyan
+    user: hozyan
+
 services:
   - type: web
     name: hozyan-api
@@ -7,15 +12,13 @@ services:
     preDeployCommand: npm run seed
     startCommand: npm start
     healthCheckPath: /api/health
-    disk:
-      name: hozyan-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DB_STORAGE
-        value: /var/data/hozyan.sqlite
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hozyan-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGIN

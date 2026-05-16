@@ -17,7 +17,11 @@ export default function SearchSuggest() {
 
   return (
     <div className="search-wrap">
-      <input placeholder="Поиск по каталогу..." value={q} onChange={(e) => setQ(e.target.value)} />
+      <input
+        placeholder="Найти материалы, инструмент, бренд…"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+      />
       {items.length > 0 && (
         <div className="search-popup">
           {items.map((item) => (

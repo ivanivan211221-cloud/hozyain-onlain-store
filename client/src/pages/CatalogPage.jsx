@@ -26,7 +26,13 @@ export default function CatalogPage() {
 
   return (
     <div className="stack">
-      <h1>Каталог материалов</h1>
+      <header>
+        <h1>Каталог</h1>
+        <p className="muted page-intro">
+          Фильтры по категории и цене, сортировка по новизне и наличию — выберите позиции для
+          заказа.
+        </p>
+      </header>
       <div className="catalog-layout">
         <aside className="filters glass">
           <input placeholder="Поиск" value={filters.q} onChange={(e) => setFilters((p) => ({ ...p, q: e.target.value }))} />

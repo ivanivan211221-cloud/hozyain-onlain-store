@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
   return (
     <motion.article
       className="card product-card"
-      whileHover={{ y: -8, boxShadow: "0 24px 40px rgba(19,43,104,.22)" }}
+      whileHover={{ y: -8, boxShadow: "0 20px 36px rgba(28, 25, 23, 0.12)" }}
       transition={{ duration: 0.2 }}
     >
       <Link to={`/catalog/${product.slug}`}>
